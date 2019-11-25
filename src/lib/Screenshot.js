@@ -32,7 +32,7 @@ class Screenshot{
       await page.setContent(html)                        //render html
     }else{
       await page.goto(url,{
-        waitUntil: 'load',
+        waitUntil: 'networkidle2',
         timeout: 9000
       });
     }
