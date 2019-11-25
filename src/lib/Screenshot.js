@@ -12,6 +12,7 @@ class Screenshot{
     this.browser = await puppeteer.launch({args:[
         '--no-sandbox',
         '--disable-setuid-sandbox'
+        '--font-render-hinting=none'
         ]});
   }
 
