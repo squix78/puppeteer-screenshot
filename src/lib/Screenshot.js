@@ -12,23 +12,30 @@ class Screenshot{
     this.browser = await puppeteer.launch({args:[
         '--no-sandbox',
         '--disable-setuid-sandbox',
-        '--font-render-hinting=none'
+        '--font-render-hinting=medium'
         ]});
   }
 
   async getImage({
                    url,
+                   width,
+                   height,
                    html,
                    screenshot={},
-                   device=devices['iPhone 8'],
                    style,
                    script,
                    waitFor,
                    ...others
   }){
     const page = await this.browser.newPage();
-
-    await page.emulate(device);                          //模拟器
+    if (width && height) {
+      
+      await page.setViewport({
+        width: parseInt(width),
+        height: parseInt(height),
+        deviceScaleFactor: 1,
+      });
+    }
     if(html){
       await page.setContent(html)                        //render html
     }else{

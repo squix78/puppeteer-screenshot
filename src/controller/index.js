@@ -14,6 +14,8 @@ const instance=new Screenshot();
 async function getMethod (ctx) {
   let options={
     url:ctx.query.url,
+    width:ctx.query.width,
+    height:ctx.query.height,
     screenshot:{
       type:ctx.query.type,
       quality:ctx.query.quality,
@@ -42,12 +44,13 @@ async function postMethod (ctx) {
   let params=ctx.request.body
   let options={
       url:params.url,
+      width:params.width,
+      height:params.width,
       screenshot:params.screenshot,
       html:params.html,
       style:params.style,
       script:params.script,
       waitFor:params.waitFor,
-      device:params.device
   }
   if(!(options=checkOption(options,ctx))) return
   ctx.type = options.screenshot.type;
