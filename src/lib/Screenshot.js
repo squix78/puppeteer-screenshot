@@ -13,25 +13,7 @@ class Screenshot{
         '--no-sandbox',
         '--disable-setuid-sandbox',
         '--font-render-hinting=none',
-        '--disable-lcd-text',
-        '--ppapi-antialiased-text-enabled=0',
-        '--ppapi-subpixel-rendering-setting=0',
-        '--disable-composited-antialiasing=1',
-        '--disable-canvas-aa',
-        '--disable-2d-canvas-clip-aa',
-        '--gpu-rasterization-msaa-sample-count=0',
-        '--disable-font-antialiasing',
-        '--disable-smooth-scrolling',
-        '--disable-roboto-font-ui',
-        '--reset-variation-state',
-        '--disable-directwrite-for-ui',
-        '--disable-hang-monitor',
-        '--enable-low-res-tiling',
-        '--enable-tile-compression=1',
-        '--ui-enable-rgba-4444-textures',
-        '--force-color-profile="srgb"',
-        '--top-chrome-md=non-material',
-        '--disable-display-color-calibration',
+        '-force-high-contrast'
         ]});
   }
 
