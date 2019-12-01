@@ -12,7 +12,8 @@ class Screenshot{
     this.browser = await puppeteer.launch({args:[
         '--no-sandbox',
         '--disable-setuid-sandbox',
-        '--font-render-hinting=medium'
+        '--font-render-hinting=none'
+
         ]});
   }
 
@@ -20,12 +21,9 @@ class Screenshot{
                    url,
                    width,
                    height,
-                   html,
-                   screenshot={},
-                   style,
-                   script,
-                   waitFor,
-                   ...others
+                   username,
+                   password,
+                   scale
   }){
     const page = await this.browser.newPage();
     if (width && height) {
@@ -33,28 +31,24 @@ class Screenshot{
       await page.setViewport({
         width: parseInt(width),
         height: parseInt(height),
-        deviceScaleFactor: 1,
+        deviceScaleFactor: parseInt(scale),
       });
     }
-    if(html){
-      await page.setContent(html)                        //render html
-    }else{
+
       await page.goto(url,{
         waitUntil: 'networkidle2',
         timeout: 9000
       });
-    }
-    if(typeof style==='object') {
-      delete style.path
-      await page.addStyleTag(style)
-    }
-    if(typeof script==='object'){
-      delete script.path
-      await page.addScriptTag(script)
-    }
-    if(waitFor) await page.waitFor(waitFor)
 
-    delete screenshot.path
+    if (username && password) {
+      page.authenticate(username, password);
+    }
+    let screenshot = {
+      type:"png",
+      fullPage:true,
+      omitBackground:false
+    }
+
     let imageBuffer=await page.screenshot(screenshot);
     await page.close();
     return imageBuffer
