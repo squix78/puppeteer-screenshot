@@ -48,6 +48,8 @@ RUN groupadd -r pptruser \
     && chown -R pptruser:pptruser /home/pptruser \
     && chown -R pptruser:pptruser ./node_modules
 # Run everything after as non-privileged user.
+COPY fontconfig/* /etc/fonts/conf.d/
+RUN fc-cache -fv
 USER pptruser
 EXPOSE  8555
 ENTRYPOINT ["dumb-init", "--"]
