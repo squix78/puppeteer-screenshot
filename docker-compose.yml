@@ -5,4 +5,4 @@ services:
     container_name: 'screenshot'
     image: 'squix78/puppeteer-screenshot'
     restart: unless-stopped
-    ports: '80:8555'
+    ports: ['80:8555']
