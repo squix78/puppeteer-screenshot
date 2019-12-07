@@ -1,0 +1,7 @@
+version: '3'
+
+services:
+  myproject:
+    container_name: 'screenshot'
+    image: 'squix78/puppeteer-screenshot'
+    restart: unless-stopped
