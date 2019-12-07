@@ -64,7 +64,7 @@ class Screenshot{
     let screenshot = {
       type:"png",
       fullPage:true,
-      omitBackground:true
+      omitBackground:false
     }
 
     let imageBuffer=await page.screenshot(screenshot);
