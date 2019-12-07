@@ -23,7 +23,9 @@ class Screenshot{
                    height,
                    username,
                    password,
-                   scale
+                   scale,
+                   tz,
+                   waitForSelector
   }){
     const page = await this.browser.newPage();
     if (width && height) {
@@ -34,19 +36,35 @@ class Screenshot{
         deviceScaleFactor: parseInt(scale),
       });
     }
-
-      await page.goto(url,{
-        waitUntil: 'networkidle2',
-        timeout: 9000
-      });
+    if (tz) {
+      await page.emulateTimezone(tz);
+    }
 
     if (username && password) {
       page.authenticate(username, password);
     }
+    let waitUntilEvent = 'networkidle2';
+    if (waitForSelector) {
+      waitUntilEvent = 'domcontentloaded';
+    }
+
+    if (waitForSelector) {
+      await page.waitForSelector(waitForSelector, {visible: true, timeout: 5000 });
+      console.log("Found selector");
+    }
+
+    await page.goto(url,{
+      waitUntil: waitUntilEvent,
+      timeout: 6000
+    });
+
+
+
+
     let screenshot = {
       type:"png",
       fullPage:true,
-      omitBackground:false
+      omitBackground:true
     }
 
     let imageBuffer=await page.screenshot(screenshot);

@@ -18,7 +18,9 @@ async function getMethod (ctx) {
     height:ctx.query.height,
     username:ctx.query.username,
     password:ctx.query.password,
-    scale:ctx.query.scale
+    scale:ctx.query.scale,
+    tz:ctx.query.tz,
+    waitForSelector:ctx.query.waitForSelector
   }
   if(!(options=checkOption(options,ctx))) return
   ctx.type = "png";
@@ -38,6 +40,8 @@ async function postMethod (ctx) {
       username:params.username,
       password:params.password,
       scale:params.scale,
+      tz:params.tz,
+      waitForSelector:params.waitForSelector
   }
   if(!(options=checkOption(options,ctx))) return
   ctx.type = options.screenshot.type;
