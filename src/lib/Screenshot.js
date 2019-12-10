@@ -2,7 +2,9 @@
  * Created by pengchaoyang on 2018/11/2
  */
 const puppeteer=require('puppeteer')
-const devices=require('./DeviceDescriptors')
+//const PNG = require('pngjs').PNG;
+const Jimp = require('jimp');
+const devices = require('./DeviceDescriptors')
 class Screenshot{
   constructor (){
     this.browser=null
@@ -21,6 +23,7 @@ class Screenshot{
                    url,
                    width,
                    height,
+                   type,
                    username,
                    password,
                    scale,
@@ -58,18 +61,29 @@ class Screenshot{
       timeout: 6000
     });
 
-
-
-
     let screenshot = {
-      type:"png",
-      fullPage:true,
-      omitBackground:false
+      fullPage:false,
+      omitBackground:true
     }
 
-    let imageBuffer=await page.screenshot(screenshot);
+    let puppeteerImageType = "";
+    if (type === "png" || type === "bmp") {
+      screenshot.type = "png";
+    } else if (type === "jpeg") {
+      screenshot.type = "jpeg";
+      screenshot.quality = 85;
+    } 
+
+    let imageBuffer = await page.screenshot(screenshot);
     await page.close();
-    return imageBuffer
+    if (type === "bmp") {
+      let image = await Jimp.read(imageBuffer);
+      image
+      return await image.getBufferAsync(Jimp.MIME_BMP); 
+      
+    }
+    
+    return imageBuffer;
   }
 
   async destroy(){

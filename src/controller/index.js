@@ -16,6 +16,7 @@ async function getMethod (ctx) {
     url:ctx.query.url,
     width:ctx.query.width,
     height:ctx.query.height,
+    type:ctx.query.type,
     username:ctx.query.username,
     password:ctx.query.password,
     scale:ctx.query.scale,
@@ -37,6 +38,7 @@ async function postMethod (ctx) {
       url:params.url,
       width:params.width,
       height:params.width,
+      type:params.type,
       username:params.username,
       password:params.password,
       scale:params.scale,
@@ -55,12 +57,15 @@ async function postMethod (ctx) {
 function checkOption(option,ctx){
     if(!/^https?:\/\/.+/.test(option.url)){
         ctx.body=Boom.badRequest('invalid url').output;
-        return false
+        return false;
     }
     if (!option.scale) {
       option.scale = 1;
     }
-    return option
+    if (!option.type) {
+      option.type = "png";
+    }
+    return option;
 }
 
 function isNumber(str){

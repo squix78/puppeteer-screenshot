@@ -13,10 +13,12 @@
   "dependencies": {
     "boom": "^7.2.2",
     "debug": "^4.1.0",
+    "jimp": "^0.9.3",
     "koa": "^2.6.1",
     "koa-bodyparser": "^4.2.1",
     "koa-onerror": "^4.1.0",
     "koa-router": "^7.4.0",
+    "pngjs": "^3.4.0",
     "puppeteer": "^2.00.0"
   },
   "devDependencies": {
