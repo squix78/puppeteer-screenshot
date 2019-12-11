@@ -27,6 +27,7 @@ class Screenshot{
                    username,
                    password,
                    scale,
+                   jpegQuality,
                    tz,
                    waitForSelector
   }){
@@ -46,14 +47,9 @@ class Screenshot{
     if (username && password) {
       page.authenticate(username, password);
     }
-    let waitUntilEvent = 'networkidle2';
+    let waitUntilEvent = 'networkidle0';
     if (waitForSelector) {
-      waitUntilEvent = 'domcontentloaded';
-    }
-
-    if (waitForSelector) {
-      await page.waitForSelector(waitForSelector, {visible: true, timeout: 5000 });
-      console.log("Found selector");
+      waitUntilEvent = 'load';
     }
 
     await page.goto(url,{
@@ -61,26 +57,34 @@ class Screenshot{
       timeout: 6000
     });
 
+    if (waitForSelector) {
+      await page.waitForSelector(waitForSelector, {visible: true, timeout: 5000 });
+      console.log("Found selector");
+    }
+
     let screenshot = {
       fullPage:false,
       omitBackground:true
     }
-
+    
     let puppeteerImageType = "";
     if (type === "png" || type === "bmp") {
       screenshot.type = "png";
     } else if (type === "jpeg") {
       screenshot.type = "jpeg";
-      screenshot.quality = 85;
+      if (jpegQuality) {
+        screenshot.quality = parseInt(jpegQuality);
+      } else {
+        screenshot.quality = 85;
+      }
     } 
 
     let imageBuffer = await page.screenshot(screenshot);
     await page.close();
     if (type === "bmp") {
       let image = await Jimp.read(imageBuffer);
-      image
+
       return await image.getBufferAsync(Jimp.MIME_BMP); 
-      
     }
     
     return imageBuffer;

@@ -20,6 +20,7 @@ async function getMethod (ctx) {
     username:ctx.query.username,
     password:ctx.query.password,
     scale:ctx.query.scale,
+    jpegQuality:ctx.query.quality,
     tz:ctx.query.tz,
     waitForSelector:ctx.query.waitForSelector
   }
@@ -42,6 +43,7 @@ async function postMethod (ctx) {
       username:params.username,
       password:params.password,
       scale:params.scale,
+      jpegQuality:params.quality,
       tz:params.tz,
       waitForSelector:params.waitForSelector
   }
