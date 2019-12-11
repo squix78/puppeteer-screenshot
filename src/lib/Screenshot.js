@@ -49,7 +49,7 @@ class Screenshot{
     }
     let waitUntilEvent = 'networkidle0';
     if (waitForSelector) {
-      waitUntilEvent = 'load';
+      waitUntilEvent = 'networkidle2';
     }
 
     await page.goto(url,{
