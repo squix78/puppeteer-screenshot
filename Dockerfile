@@ -18,10 +18,14 @@ RUN apt-get update && apt-get install -y wget --no-install-recommends \
     && rm -rf /var/lib/apt/lists/* \
     && apt-get purge --auto-remove -y curl \
     && rm -rf /src/*.deb
+RUN apt-get update && apt-get install unzip
 # It's a good idea to use dumb-init to help prevent zombie chrome processes.
 ADD https://github.com/Yelp/dumb-init/releases/download/v1.2.0/dumb-init_1.2.0_amd64 /usr/local/bin/dumb-init
 RUN chmod +x /usr/local/bin/dumb-init
 # install fonts
+RUN wget https://use.fontawesome.com/releases/v5.12.0/fontawesome-free-5.12.0-desktop.zip -O /usr/share/fonts/fontawesome.zip
+RUN unzip /usr/share/fonts/fontawesome.zip
+
 COPY ./src/fonts/ /usr/share/fonts/chinese
 RUN chmod -R 755 /usr/share/fonts/ \
     && fc-cache -f -v
@@ -31,8 +35,7 @@ RUN chmod -R 755 /usr/share/fonts/ \
 # ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
 # Install puppeteer so it's available in the container.
 #RUN npm i puppeteer
-RUN npm config set registry https://registry.npm.taobao.org \
-    && npm install pm2 -g \
+RUN npm install pm2 -g \
     && pm2 install pm2-logrotate \
     && pm2 set pm2-logrotate:max_size 100M \
     && pm2 set pm2-logrotate:retain 100 \

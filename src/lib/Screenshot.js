@@ -15,7 +15,14 @@ class Screenshot{
         '--no-sandbox',
         '--disable-setuid-sandbox',
         '--font-render-hinting=none',
-        '-force-high-contrast'
+        '--force-high-contrast',
+        '--disable-canvas-aa',
+        '--disable-composited-antialiasing',
+        '--gpu-rasterization-msaa-sample-count=0',
+        '--webgl-antialiasing-mode=none',
+        '-disable-2d-canvas-clip-aa',
+        '--webgl-msaa-sample-count=0',
+        '--canvas-msaa-sample-count=0'
         ]});
   }
 
